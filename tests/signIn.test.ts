@@ -1,14 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { credentials } from '../fixtures';
 
 test.describe('Sign in', () => {
   test('Successful Login', async ({ page }) => {
-    const email = 'joachim+453459@systima.no';
-    const password = '123456789';
-
     await page.goto('/login');
-    await page.locator('[name="email"]').fill(email);
-    await page.locator('[name="password"]').fill(password);
+    await page.locator('[name="email"]').fill(credentials.email);
+    await page.locator('[name="password"]').fill(credentials.password);
     await page.locator('button', { hasText: 'Logg inn' }).click();
     await page.waitForURL('systimaas7/dashboard');
     await expect(page).toHaveURL('systimaas7/dashboard');
