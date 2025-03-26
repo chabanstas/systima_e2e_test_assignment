@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { credentials } from '../fixtures';
+import { colors, credentials } from '../fixtures';
 
 test.describe('Sign in', () => {
   test('Successful Login', async ({ page }) => {
@@ -17,12 +17,12 @@ test.describe('Sign in', () => {
     await page.locator('[name="email"]').fill(faker.internet.email());
     await page.locator('[name="password"]').fill(faker.internet.password());
     await page.locator('button', { hasText: 'Logg inn' }).click();
-    await expect(page.locator('.v-alert__content')).toHaveText(
+    await expect(page.getByRole('alert')).toHaveText(
       'Feil brukernavn / passord'
     );
-    await expect(page.locator('[role="alert"]')).toHaveCSS(
+    await expect(page.getByRole('alert')).toHaveCSS(
       'background-color',
-      'rgb(255, 214, 214)'
+      colors.error
     );
     await expect(page).toHaveURL('login');
   });
